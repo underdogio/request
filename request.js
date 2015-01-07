@@ -736,7 +736,6 @@ Request.prototype.init = function (options) {
 // httpModule, Tunneling agent, and/or Forever Agent in use.
 Request.prototype._updateProtocol = function () {
   var self = this
-  var protocol = self.uri.protocol
 
   if (self.tunnel) {
     // previously was doing http, now doing https
