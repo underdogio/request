@@ -248,7 +248,9 @@ if (process.env.TEST_PROXY_HARNESS) {
     function onConnect(req, socket, head) {
       s.removeListener('connect', onConnect);
       console.log('received');
-      socket.write('HTTP/1.1 200 OK\n\n');
+      socket.write('HTTP/1.1 204 NO CONTENT\r\n');
+      socket.write('Content-Length: 0\r\n');
+      socket.write('\r\n');
       socket.end();
       receivedConnection = true;
     }
