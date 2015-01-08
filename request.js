@@ -281,6 +281,7 @@ function Request (options) {
 
   self.readable = true
   self.writable = true
+  self.explicitTunnel = options.tunnel
   if (typeof options.tunnel === 'undefined') {
     options.tunnel = false
   }
@@ -308,6 +309,7 @@ Request.prototype.setupTunnel = function () {
     return false
   }
 
+  console.log(self.tunnel)
   if ((!self.tunnel && self.uri.protocol !== 'https:') || self.tunnel === false) {
     return false
   }
