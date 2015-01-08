@@ -245,7 +245,6 @@ if (process.env.TEST_PROXY_HARNESS) {
 }
 
 
-
 tape('cleanup', function(t) {
   s.close()
   t.end()

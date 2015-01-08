@@ -739,7 +739,7 @@ Request.prototype._updateProtocol = function () {
   var self = this
   var protocol = self.uri.protocol
 
-  if ((protocol === 'https:' && self.tunnel !== false)) {
+  if (protocol === 'https:' || self.tunnel) {
     // previously was doing http, now doing https
     // if it's https, then we might need to tunnel now.
     if (self.proxy) {

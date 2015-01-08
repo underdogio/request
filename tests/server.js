@@ -9,7 +9,6 @@ var fs = require('fs')
   , assert = require('assert')
 
 exports.port = 6767
-exports.port2 = 6768
 exports.portSSL = 16167
 
 exports.createServer =  function (port) {
