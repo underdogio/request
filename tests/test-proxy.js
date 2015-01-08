@@ -244,13 +244,25 @@ if (process.env.TEST_PROXY_HARNESS) {
   // }, true)
 
   tape('proxy https over http defaults to tunnelling', function(t) {
+    var receivedConnection = false;
     function onConnect(req, socket, head) {
       s.removeListener('connect', onConnect);
       socket.write('HTTP/1.1 200 OK');
       socket.end();
-      t.end();
+      receivedConnection = true;
     }
     s.on('connect', onConnect)
+    request({
+      url    : 'https://google.com',
+      proxy  : s.url
+    }, function (err, res, body) {
+      t.equal(err, null)
+      t.equal(res.statusCode, 200)
+      process.nextTick(function () {
+        t.equal(receivedConnection, true);
+        t.end();
+      });
+    });
   });
 }
 
