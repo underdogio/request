@@ -19,6 +19,7 @@ exports.createServer =  function (port) {
   s.port = port
   s.url = 'http://localhost:' + port
   s.protocol = 'http'
+  console.log('setup');
   return s
 }
 
@@ -97,6 +98,7 @@ exports.createPostJSONValidator = function (value, reqContentType) {
 }
 exports.createGetResponse = function (text, contentType) {
   var l = function (req, resp) {
+  console.log('wat');
     contentType = contentType || 'text/plain'
     resp.writeHead(200, {'content-type':contentType})
     resp.write(text)

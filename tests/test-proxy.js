@@ -8,6 +8,7 @@ var s = server.createServer()
   , currResponseHandler
 
 s.on('http://google.com/', function(req, res) {
+  console.log('goooogle');
   currResponseHandler(req, res)
   res.writeHeader(200)
   res.end('ok')
@@ -46,6 +47,7 @@ function runTest(name, options, responseHandler) {
 
     var called = false
     currResponseHandler = function(req, res) {
+      console.log('request received');
       if (responseHandler) {
         called = true
         t.equal(req.headers.host, 'google.com')
@@ -64,6 +66,7 @@ function runTest(name, options, responseHandler) {
       requestOpts[k] = options[k]
     }
 
+    console.log(requestOpts);
     request(requestOpts, function(err, res, body) {
       if (responseHandler && !called) {
         t.fail('proxy response should be called')
@@ -237,8 +240,7 @@ if (process.env.TEST_PROXY_HARNESS) {
 
   runTest('proxy https over http', {
     url   : 'https://google.com',
-    proxy : s.url,
-    tunnel: false
+    proxy : s.url
   }, true)
 }
 
