@@ -5,6 +5,7 @@ var server = require('./server')
   , tape = require('tape')
 
 var s = server.createServer()
+  , s2 = server.createServer(server.port2)
   , currResponseHandler
 
 function handleRequest(req, res) {
@@ -237,11 +238,17 @@ if (process.env.TEST_PROXY_HARNESS) {
     t.equal(req.headers.authorization, 'Basic dXNlcjpwYXNz')
   })
 
-  runTest('proxy https over http', {
-    url    : 'https://google.com',
-    proxy  : s.url
-  }, true)
+  // runTest('proxy https over http', {
+  //   url    : 'https://google.com',
+  //   proxy  : s.url,
+  //   tunnel : false
+  // }, true)
+
+  tape('proxy https over http defaults to tunnelling', function(t) {
+    var s2 = s.
+  });
 }
+
 
 
 tape('cleanup', function(t) {
