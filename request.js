@@ -289,7 +289,6 @@ function Request (options) {
   }
   self.canTunnel = options.tunnel !== false && tunnel
   self.init(options)
-  console.log('init occurred');
 }
 
 util.inherits(Request, stream.Stream)
@@ -372,11 +371,9 @@ Request.prototype.init = function (options) {
   self.__isRequestRequest = true
 
   // Protect against double callback
-  console.log(self.callback);
   if (!self._callback && self.callback) {
     self._callback = self.callback
     self.callback = function () {
-      console.log('callle');
       if (self._callbackCalled) {
         return // Print a warning maybe?
       }
@@ -625,7 +622,6 @@ Request.prototype.init = function (options) {
     , httpModules = self.httpModules || {}
 
   self.httpModule = httpModules[protocol] || defaultModules[protocol]
-  console.log(protocol);
 
   if (!self.httpModule) {
     return self.emit('error', new Error('Invalid protocol: ' + protocol))
@@ -649,14 +645,11 @@ Request.prototype.init = function (options) {
     }
   }
 
-  console.log('ready to send');
-
   if (self.pool === false) {
     self.agent = false
   } else {
     self.agent = self.agent || self.getNewAgent()
   }
-  console.log('whattup');
 
   self.on('pipe', function (src) {
     if (self.ntick && self._started) {
@@ -718,9 +711,7 @@ Request.prototype.init = function (options) {
         }
         self.end()
       }
-      console.log('waaaat');
     }
-    console.log(self);
 
     if (self._form && !self.hasHeader('content-length')) {
       // Before ending the request, we had to compute the length of the whole form, asyncly
@@ -989,7 +980,6 @@ Request.prototype.onRequestError = function (error) {
 
 Request.prototype.onRequestResponse = function (response) {
   var self = this
-  console.log('responded');
   debug('onRequestResponse', self.uri.href, response.statusCode, response.headers)
   response.on('end', function() {
     debug('response end', self.uri.href, response.statusCode, response.headers)
@@ -1219,7 +1209,7 @@ Request.prototype.onRequestResponse = function (response) {
     }
 
     self.emit('redirect')
-console.log('redirected');
+
     self.init()
     return // Ignore the rest of the response
   } else {
@@ -1795,7 +1785,6 @@ Request.prototype.end = function (chunk) {
   if (!self._started) {
     self.start()
   }
-  console.log('ended');
   self.req.end()
 }
 Request.prototype.pause = function () {
