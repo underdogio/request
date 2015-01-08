@@ -237,36 +237,11 @@ if (process.env.TEST_PROXY_HARNESS) {
     t.equal(req.headers.authorization, 'Basic dXNlcjpwYXNz')
   })
 
-  // runTest('proxy https over http', {
-  //   url    : 'https://google.com',
-  //   proxy  : s.url,
-  //   tunnel : false
-  // }, true)
-
-  tape('proxy https over http defaults to tunnelling', function(t) {
-    var receivedConnection = false;
-    function onConnect(req, socket, head) {
-      s.removeListener('connect', onConnect);
-      console.log('received');
-      socket.write('HTTP/1.1 204 NO CONTENT\r\n');
-      socket.write('Content-Length: 0\r\n');
-      socket.write('\r\n');
-      socket.end();
-      receivedConnection = true;
-    }
-    s.on('connect', onConnect)
-    request({
-      url    : 'https://google.com',
-      proxy  : s.url
-    }, function (err, res, body) {
-      t.equal(err, null)
-      t.equal(res.statusCode, 200)
-      process.nextTick(function () {
-        t.equal(receivedConnection, true);
-        t.end();
-      });
-    });
-  });
+  runTest('proxy https over http without tunneling', {
+    url    : 'https://google.com',
+    proxy  : s.url,
+    tunnel : false
+  }, true)
 }
 
 
