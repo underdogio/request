@@ -309,7 +309,6 @@ Request.prototype.setupTunnel = function () {
     return false
   }
 
-  console.log(self.tunnel)
   if ((!self.tunnel && self.uri.protocol !== 'https:') || self.explicitTunnel === false) {
     return false
   }
