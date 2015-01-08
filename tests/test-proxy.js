@@ -239,8 +239,7 @@ if (process.env.TEST_PROXY_HARNESS) {
 
   runTest('proxy https over http', {
     url    : 'https://google.com',
-    proxy  : s.url,
-    tunnel : false
+    proxy  : s.url
   }, true)
 }
 
