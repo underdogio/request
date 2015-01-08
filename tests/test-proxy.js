@@ -248,15 +248,7 @@ if (process.env.TEST_PROXY_HARNESS) {
     function onConnect(req, socket, head) {
       s.removeListener('connect', onConnect);
       console.log('received');
-      socket.write('HTTP/1.1 204 NO CONTENT');
-      console.log(socket.write + '');
-      socket.write('Server: nginx');
-      socket.write('Date: Thu, 08 Jan 2015 18:09:39 GMT');
-      socket.write('Content-Type: text/html');
-      socket.write('Content-Length: 0');
-      socket.write('Last-Modified: Wed, 24 Dec 2014 01:30:25 GMT');
-      socket.write('Accept-Ranges: bytes');
-      socket.write('Proxy-Connection: Keep-alive');
+      socket.write('HTTP/1.1 200 OK\n\n');
       socket.end();
       receivedConnection = true;
     }
