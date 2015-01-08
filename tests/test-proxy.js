@@ -240,7 +240,7 @@ if (process.env.TEST_PROXY_HARNESS) {
   runTest('proxy https over http without tunneling', {
     url    : 'https://google.com',
     proxy  : s.url,
-    // tunnel : false
+    tunnel : false
   }, true)
 }
 
