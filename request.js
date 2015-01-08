@@ -281,9 +281,10 @@ function Request (options) {
 
   self.readable = true
   self.writable = true
-  self.explicitTunnel = options.tunnel
   if (typeof options.tunnel === 'undefined') {
     options.tunnel = false
+  } else {
+    self.explicitTunnel = true
   }
   if (options.method) {
     self.explicitMethod = true
@@ -309,7 +310,7 @@ Request.prototype.setupTunnel = function () {
     return false
   }
 
-  if ((!self.tunnel && self.uri.protocol !== 'https:') || self.explicitTunnel === false) {
+  if (!self.tunnel && (self.uri.protocol !== 'https:' || self.explicitTunnel === true)) {
     return false
   }
 
