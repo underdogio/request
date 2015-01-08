@@ -5,7 +5,6 @@ var server = require('./server')
   , tape = require('tape')
 
 var s = server.createServer()
-  , s2 = server.createServer(server.port2)
   , currResponseHandler
 
 function handleRequest(req, res) {
@@ -245,7 +244,13 @@ if (process.env.TEST_PROXY_HARNESS) {
   // }, true)
 
   tape('proxy https over http defaults to tunnelling', function(t) {
-    var s2 = s.
+    function onConnect(req, socket, head) {
+      s.removeListener('connect', onConnect);
+      socket.write('HTTP/1.1 200 OK');
+      socket.end();
+      t.end();
+    }
+    s.on('connect', onConnect)
   });
 }
 
